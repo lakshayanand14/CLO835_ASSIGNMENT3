@@ -3,8 +3,8 @@ kind: Deployment
 metadata:
   name: mongo
   labels:
-    app: mongo
-    Label: assignment3
+    app.kubernetes.io/name: mongo
+    app.kubernetes.io/component: backend
 spec:
   selector:
     matchLabels:
@@ -29,3 +29,10 @@ spec:
             memory: 100Mi
         ports:
         - containerPort: 27017
+        volumeMounts: 
+            - name: mongodb-pvc
+              mountPath: /data/db
+      volumes:
+        - name: mongodb-pvc
+          persistentVolumeClaim:
+            claimName: mongodb-pvc 
